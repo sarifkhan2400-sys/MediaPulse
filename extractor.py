@@ -1,4 +1,4 @@
-no import yt_dlp
+import yt_dlp
 
 def get_video_info(video_url):
     
