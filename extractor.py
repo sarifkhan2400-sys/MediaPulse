@@ -5,15 +5,22 @@ def get_video_info(video_url):
         'format': 'best',
         'quiet': True,
         'no_warnings': True,
-        # ইউটিউব থেকে বোট ডিটেকশন এড়াতে কিছু অতিরিক্ত সেটিংস
-        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        'ignoreerrors': True,
+        'user_agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+        'http_headers': {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Language': 'en-us,en;q=0.5',
+        }
     }
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             info_dict = ydl.extract_info(video_url, download=False)
             
-            # সংশোধিত অংশ: null='Unknown' এর বদলে সরাসরি ডিফল্ট ভ্যালু
+            if not info_dict:
+                return {'error': 'Failed to extract video info'}
+
             video_data = {
                 'title': info_dict.get('title', 'Unknown'), 
                 'duration': info_dict.get('duration', 0),
