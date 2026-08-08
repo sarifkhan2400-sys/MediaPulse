@@ -1,9 +1,7 @@
-import yt_dlp
+no import yt_dlp
 
 def get_video_info(video_url):
-    """
-    ইউটিউব লিংক থেকে ভিডিওর শিরোনাম, ডিরেক্ট স্ট্রিম লিংক এবং ফরম্যাটগুলো বের করে দেয়।
-    """
+    
     ydl_opts = {
         'format': 'best',
         'quiet': True,
@@ -12,7 +10,7 @@ def get_video_info(video_url):
     
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-            # ভিডিওর মেটাডেটা ফেচ করা
+            
             info_dict = ydl.extract_info(video_url, download=False)
             
             video_data = {
@@ -23,7 +21,7 @@ def get_video_info(video_url):
                 'formats': []
             }
             
-            # বিভিন্ন রেজুলেশনের ফরম্যাটগুলো গুছিয়ে নেওয়া
+            
             for f in info_dict.get('formats', []):
                 if f.get('url'):
                     video_data['formats'].append({
@@ -37,7 +35,7 @@ def get_video_info(video_url):
     except Exception as e:
         return {'error': str(e)}
 
-# কোড টেস্ট করার জন্য (আপনার ভিডিও লিংক এখানে বসাবেন)
+
 if __name__ == "__main__":
     url = "https://www.youtube.com/watch?v=EXAMPLE_ID"
     result = get_video_info(url)
